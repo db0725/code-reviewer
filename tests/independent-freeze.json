@@ -1,0 +1,22 @@
+{
+  "version": "independent-synthetic-v1",
+  "cases_sha256": "7f3c320bfc21f924478997142326345d72162f6c28d3f51b03e4e7be165793bc",
+  "public_builder_sha256": "67e9a0f648f36e6621fe194221ff2274ae6cc40020147677f4a1fbd5ae07e6fc",
+  "oracles_sha256": "8e4651aff505edddcdcc44320a7fa3cfd16f0012dc8f7c93d90bf412341f8529",
+  "dev": [
+    "IE001",
+    "IE002",
+    "IE003",
+    "IE004"
+  ],
+  "holdout": [
+    "IE005",
+    "IE006",
+    "IE007",
+    "IE008",
+    "IE009",
+    "IE010",
+    "IE011",
+    "IE012"
+  ]
+}

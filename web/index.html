@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Code Review Agent · 代码审查工作台</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Code Review Agent 首页"><span class="brand-mark" aria-hidden="true">cr<span>.</span></span><span>Code Review Agent<small>代码审查工作台</small></span></a>
+    <div class="top-meta"><span class="local-dot"></span> LOCAL WORKSPACE <span class="divider">/</span> <span>DEMO 01</span></div>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">READ THE CHANGE. FOLLOW THE EVIDENCE.</p><h1>从代码变更，<span>走到问题证据。</span></h1><p class="intro-copy">看 Agent 自主查阅关联代码，留下可追溯的审查意见。</p></div>
+      <div class="intro-note"><span class="note-rule"></span><p>一次变更，一条调查路径。<br><span>只读分析 · 明确边界 · 证据优先</span></p></div>
+    </section>
+    <div id="error" class="error" role="alert" hidden></div>
+    <section class="workspace" aria-label="审查工作台">
+      <aside class="sidebar">
+        <div class="section-label"><span>01 / 选择变更</span><span class="count">03</span></div>
+        <div class="source-switch" role="group" aria-label="变更来源"><button id="source-example" type="button" aria-pressed="true">内置示例</button><button id="source-git" type="button" aria-pressed="false">本地仓库</button></div>
+        <div id="examples" class="example-list" aria-label="示例列表"></div>
+        <div id="git-panel" hidden>
+          <form id="repo-form" class="repo-form">
+            <label for="repo-path">本地 Git 仓库路径</label><input id="repo-path" type="text" spellcheck="false" placeholder="例如 E:\项目\DKNet" autocomplete="off">
+            <button id="inspect-repo" class="secondary" type="submit">读取仓库</button>
+          </form>
+          <div id="repo-versions" class="repo-form" hidden>
+            <label for="comparison-mode">审查方式</label><select id="comparison-mode"><option value="initial">首次导入（空快照 → 提交）</option><option value="commits">两个提交对比</option></select>
+            <label id="base-label" for="base-ref" hidden>修改前提交</label><select id="base-ref" hidden></select>
+            <label for="head-ref">目标提交</label><select id="head-ref"></select>
+            <details class="project-options"><summary>项目说明与资源设置（可选）</summary><div class="context-fields">
+              <label for="project-notes">项目补充说明</label><textarea id="project-notes" rows="4" maxlength="2000" placeholder="例如：数据集和训练权重需自行准备，本次只审查代码。"></textarea>
+              <label for="dataset-status">数据集状态</label><select id="dataset-status"><option value="unknown">未说明／不确定</option><option value="not_provided">未提供</option><option value="provided">已提供（用户声明）</option></select>
+              <label for="weights-status">模型权重状态</label><select id="weights-status"><option value="unknown">未说明／不确定</option><option value="not_provided">未提供</option><option value="provided">已提供（用户声明）</option></select>
+              <label for="excluded-paths">额外排除路径（每行一条）</label><textarea id="excluded-paths" rows="3" maxlength="4200" placeholder="outputs/&#10;private/*.py"></textarea>
+              <p class="context-hint">仅支持仓库相对路径、目录和通配符，最多 20 条。已提供仅作声明，本次仍不加载数据、权重或执行训练。</p>
+            </div></details>
+            <button id="preview-git" class="secondary" type="button">预览代码变更</button>
+          </div>
+          <p id="repo-summary" class="repo-summary" aria-live="polite">填写仓库路径后读取版本。</p>
+          <p class="dataset-note">数据集无需导入。只读 Git 提交中的代码与说明，不扫描本地数据目录。</p>
+        </div>
+        <div class="file-heading">仓库文件 <span id="file-count"></span></div>
+        <nav id="files" class="file-list" aria-label="仓库文件"></nav>
+        <div class="sidebar-bottom"><span class="mini-label">REVIEW BOUNDARY</span><p>Python 静态代码审查<br>不会修改或执行仓库代码</p><span class="read-only">只读工作区</span></div>
+      </aside>
+      <section class="editor" aria-label="代码变更">
+        <div class="editor-header"><div><span class="mini-label">02 / CODE CONTEXT</span><h2 id="example-title">加载示例中…</h2></div><span class="language">PYTHON</span></div>
+        <p id="example-description" class="example-description"></p>
+        <div id="source-context" class="source-context" hidden></div>
+        <div class="editor-toolbar"><span id="current-file">—</span><div class="view-switch" role="group" aria-label="代码视图"><button id="diff-view" class="active" type="button" aria-pressed="true">变更视图</button><button id="source-view" type="button" aria-pressed="false">修改后</button></div></div>
+        <div class="code-scroll" id="code-scroll"><div id="code" class="code" aria-label="代码内容"></div></div>
+        <div class="editor-footer"><span><i class="legend-add"></i>新增 <i class="legend-delete"></i>删除</span><span id="change-stat">—</span></div>
+        <div class="context-note"><span class="context-icon">↗</span><p><strong>变更只是调查的起点</strong><br>Agent 可以搜索引用、查找函数定义，读取关联文件后再判断。</p></div>
+      </section>
+      <section class="review-panel" aria-label="审查过程和报告">
+        <div class="review-heading"><span class="mini-label">03 / AGENT REVIEW</span><span id="status" class="status idle">待开始</span></div>
+        <div class="model-status"><span id="model-dot" class="model-dot"></span><span id="model-status">检查模型配置…</span></div>
+        <div class="actions"><button id="start-real" class="primary" type="button">开始真实审查 <span aria-hidden="true">↗</span></button><button id="start-replay" class="secondary" type="button">离线回放</button></div>
+        <p id="mode-note" class="mode-note">离线回放使用固定脚本，真实审查由模型自主选择工具。</p>
+        <div class="review-tabs" role="tablist" aria-label="审查信息"><button id="trace-tab" type="button" role="tab" aria-selected="true" aria-controls="trace-panel">执行轨迹 <span id="trace-count">0</span></button><button id="report-tab" type="button" role="tab" aria-selected="false" aria-controls="report-panel">审查报告 <span id="finding-count">—</span></button></div>
+        <div id="trace-panel" class="tab-panel" role="tabpanel" aria-labelledby="trace-tab"><div id="trace-empty" class="empty-state"><div class="empty-symbol" aria-hidden="true">⌁</div><h3>跟随一次真实调查</h3><p>从左侧选择一组变更，开始审查。<br>每次查阅、每条反馈都会出现在这里。</p><div class="flow-preview"><span>查看变更</span><b>→</b><span>查阅代码</span><b>→</b><span>形成意见</span></div></div><ol id="trace" class="trace-list" aria-live="polite"></ol></div>
+        <div id="report-panel" class="tab-panel" role="tabpanel" aria-labelledby="report-tab" hidden><div id="report" class="report"><div class="empty-state"><div class="empty-symbol" aria-hidden="true">≡</div><h3>报告将在审查后生成</h3><p>每个问题都会附上位置、触发条件、<br>代码证据和修复建议。</p></div></div></div>
+        <div class="review-footer"><span id="run-metrics">最多 50 轮 · 总时限 5 分钟</span><a id="download" class="download" href="#" download hidden>下载报告 ↓</a></div>
+      </section>
+    </section>
+    <footer class="page-footer"><span>BUILT TO INSPECT, NOT TO GUESS.</span><p>结构校验确认位置与原文匹配；缺陷是否成立仍需人工复核。</p><span>只读审查 / 证据优先</span></footer>
+  </main>
+</body>
+</html>

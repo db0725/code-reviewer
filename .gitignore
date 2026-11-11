@@ -1,0 +1,12 @@
+__pycache__/
+.venv/
+*.pyc
+.env
+.env.*
+!.env.example
+# 实验记录统一存放在 tests/results；不提交真实模型返回和本机路径。
+tests/results/
+# 兼容使用旧输出路径的本机命令。
+local-review-results/
+evaluation-*.json
+structured-probe*.json
