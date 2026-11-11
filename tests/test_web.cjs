@@ -66,6 +66,8 @@ test('Git workflow requires preview, uses its ID and exposes the report', async 
   assert.equal(ui.nodes['start-replay'].hidden, true);
   await ui.run('inspectRepo({preventDefault(){}})');
   await ui.run('previewGit()');
+  assert.equal(ui.nodes['repo-settings'].open, false);
+  assert.match(ui.nodes['trace-empty'].textContent, /尚未开始审查/);
   assert.equal(ui.nodes['start-real'].disabled, false);
   assert.match(ui.nodes['source-context'].textContent, /数据集/);
   await ui.run("start('real')");
@@ -118,6 +120,7 @@ test('version change invalidates an existing preview before another run', async 
   const ui = await app(); ui.run("switchSource('git')");
   await ui.run('inspectRepo({preventDefault(){}})'); await ui.run('previewGit()');
   ui.nodes['head-ref'].events.change();
+  assert.equal(ui.nodes['repo-settings'].open, true);
   assert.equal(ui.nodes['start-real'].disabled, true);
   assert.equal(ui.run('state.gitPreview'), null);
   await ui.run("start('real')");

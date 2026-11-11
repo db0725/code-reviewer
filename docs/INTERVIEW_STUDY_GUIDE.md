@@ -824,7 +824,7 @@ AST 提供定义、位置和调用等结构，业务错误还依赖契约与行�
 - [复核与独立评测结果](../tests/VERIFICATION_RESULTS.md)：新增评测、原始失败和结果限制。
 - [独立评测说明](../tests/INDEPENDENT_EVALUATION.md)：冻结、泄漏隔离与指标公式。
 - [DKNet 初审与受控复核](../tests/DKNET_LOCAL_RESULTS.md)：真实代码风险与验证强度。
-- [结构化输出开发组复测](../../review-agent-bench/STRUCTURED_RESULTS.md)：18 次结构反馈到本批 0 次的完整条件。
-- [项目复盘与错误修复记录](../../项目复盘与错误修复记录.md)：错误原因、修复与效果对照。
+- [结构化输出开发组复测](../tests/BENCHMARK_STRUCTURED_RESULTS.md)：18 次结构反馈到本批 0 次的完整条件。
+- [项目复盘与错误修复记录](PROJECT_RETROSPECTIVE.md)：错误原因、修复与效果对照。
 
 这份项目最值得讲清楚的能力，是把模型能力做成**有输入范围、有执行约束、有可追溯证据、会承认不确定、能够用实验检验的应用流程**。

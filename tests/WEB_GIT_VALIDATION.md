@@ -52,10 +52,10 @@ DKNet 只有一个初始提交，明确使用空快照到 `ec79fbe23002412586589
 
 这次返回的意见与此前 15 文件初审不完全相同，模型有输出波动，且本轮排除了额外数据说明。两次均无完整缺陷真值，本轮也没有 diff 对照，不能据此计算准确率或宣称效果提升。原始结果没有覆盖：
 
-- [任务 JSON](results/local-review-results/dknet-web-20261025-api/report.json)
-- [原始报告](results/local-review-results/dknet-web-20261025-api/REPORT.md)
-- [SSE 事件](results/local-review-results/dknet-web-20261025-api/events.sse)
-- [用于恢复的固定输入](results/local-review-results/dknet-web-20261025-api/input.json)
+- 任务 JSON（本机原始材料：`results/local-review-results/dknet-web-20261025-api/report.json`）
+- 原始报告（本机原始材料：`results/local-review-results/dknet-web-20261025-api/REPORT.md`）
+- SSE 事件（本机原始材料：`results/local-review-results/dknet-web-20261025-api/events.sse`）
+- 用于恢复的固定输入（本机原始材料：`results/local-review-results/dknet-web-20261025-api/input.json`）
 - [前一次命令行初审与人工复核](DKNET_LOCAL_RESULTS.md)
 
 ## 数据排除的实现边界

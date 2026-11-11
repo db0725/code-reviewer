@@ -27,9 +27,9 @@
 
 原始模型输出和事件没有为人工结论而改写：
 
-- [原始审查报告](results/local-review-results/dknet-initial-20261025/REPORT.md)
-- [完整任务与调用记录](results/local-review-results/dknet-initial-20261025/report.json)
-- [独立复核结果](results/local-review-results/dknet-initial-20261025/verification.json)
+- 原始审查报告（本机原始材料：`results/local-review-results/dknet-initial-20261025/REPORT.md`）
+- 完整任务与调用记录（本机原始材料：`results/local-review-results/dknet-initial-20261025/report.json`）
+- 独立复核结果（本机原始材料：`results/local-review-results/dknet-initial-20261025/verification.json`）
 
 ## 3. 三条问题逐项复核
 

@@ -8,6 +8,9 @@
 | --- | --- |
 | `test_*.py` | Python 单元与本地 HTTP/SSE 回归检查 |
 | `test_web.cjs` | Node DOM 页面状态检查，不代替浏览器布局验证 |
+| `ui_visual_check.cjs` | 本机隔离Chrome渲染、键盘、实际回放和受控状态检查，不调用模型 |
+| `UI_REDESIGN_RESULTS.md` | 前端改版前后布局、截图及验证限制 |
+| `BENCHMARK_INITIAL_RESULTS.md`、`BENCHMARK_STRUCTURED_RESULTS.md` | 独立基准仓库的结果说明副本；原始输出与基准源码未一并发布 |
 | `evaluate.py` | 三个内置案例的批量回放或真实模型评估 |
 | `probe_structured.py` | 真实模型结构兼容探针，不衡量缺陷识别能力 |
 | `verify_dknet_review.py` | 固定 DKNet 函数的受控复核，不执行训练 |
